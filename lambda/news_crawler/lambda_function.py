@@ -1,13 +1,13 @@
 
 import json
 
-from .crowler import Crowler
+from news_crawler.crawler import Crawler
 
 
 def lambda_main():
 
-    crowler = Crowler()
-    status_code = crowler.run()
+    crawler = Crawler()
+    status_code = crawler.run()
 
     return status_code
 

@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
-from .db_access import DBAccessor
+from news_crawler.db_access import DBAccessor
 
 # from dateutil.relativedelta import relativedelta
 
@@ -24,7 +24,7 @@ STOCKS = 300  # 検索対象にするstock数
 URL_NEWS = 'https://newsapi.org'
 
 
-class Crowler:
+class Crawler:
     # # NOTE ファクトリにできそう
     # access_token = os.environ['API_KEY']
     # headers = {'Authorization': 'Bearer '+access_token}
