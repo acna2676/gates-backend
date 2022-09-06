@@ -2,15 +2,15 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform:
 - AWS::Serverless-2016-10-31
 Parameters:
-  ProjectId:
+  ProjectName:
     Type: String
     Description: CodeStar projectId used to associate new resources to team members
-    Default: gates-dev
+    Default: gates
   Stage:
     Type: String
     Description: The name for a project pipeline stage, such as Staging or Prod, for
       which resources are provisioned and deployed.
-    Default: ''
+    Default: dev
 Globals:
   Function:
     AutoPublishAlias: live
@@ -20,24 +20,19 @@ Globals:
   Api:
     OpenApiVersion: 3.0.1
 Resources:
-  gates-devApi:
+  gatesApi:
     Type: AWS::Serverless::Api
     Properties:
       Name: gates-dev
       StageName: api
       TracingEnabled: true
-      Auth:
-        DefaultAuthorizer: Cognito_Custom_Authorizer
-        Authorizers:
-          Cognito_Custom_Authorizer:
-            UserPoolArn: arn:aws:cognito-idp:ap-northeast-1:197052146621:userpool/ap-northeast-1_LeydkH8Vh
       DefinitionBody:
         openapi: 3.0.1
         info:
           title: gates-dev
           version: '2020-11-20T12:39:22Z'
         paths:
-          /{version}:
+          /{version}/news/{date}:
             get:
               parameters:
               - name: version
@@ -57,324 +52,9 @@ Resources:
                       schema:
                         $ref: '#/components/schemas/Empty'
               security:
-              - Cognito_Custom_Authorizer: []
+              - api_key: []
               x-amazon-apigateway-integration:
-                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-get-weight/invocations
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                contentHandling: CONVERT_TO_TEXT
-                type: aws_proxy
-            options:
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                    Access-Control-Allow-Methods:
-                      schema:
-                        type: string
-                    Access-Control-Allow-Headers:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - NONE: []
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Methods: '''GET,OPTIONS,POST'''
-                      method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                requestTemplates:
-                  application/json: '{"statusCode": 200}'
-                passthroughBehavior: when_no_match
-                type: mock
-          /{version}/{date}/weight:
-            get:
-              parameters:
-              - name: date
-                in: path
-                required: true
-                schema:
-                  type: string
-              - name: version
-                in: path
-                required: true
-                schema:
-                  type: string
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - Cognito_Custom_Authorizer: []
-              x-amazon-apigateway-integration:
-                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-get-dairy-weight/invocations
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                contentHandling: CONVERT_TO_TEXT
-                type: aws_proxy
-            post:
-              parameters:
-              - name: date
-                in: path
-                required: true
-                schema:
-                  type: string
-              - name: version
-                in: path
-                required: true
-                schema:
-                  type: string
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - Cognito_Custom_Authorizer: []
-              x-amazon-apigateway-integration:
-                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-post-dairy-weight/invocations
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                contentHandling: CONVERT_TO_TEXT
-                type: aws_proxy
-            options:
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                    Access-Control-Allow-Methods:
-                      schema:
-                        type: string
-                    Access-Control-Allow-Headers:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - NONE: []
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Methods: '''GET,OPTIONS,POST'''
-                      method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                requestTemplates:
-                  application/json: '{"statusCode": 200}'
-                passthroughBehavior: when_no_match
-                type: mock
-          /{version}/{date}/diarly:
-            get:
-              parameters:
-              - name: date
-                in: path
-                required: true
-                schema:
-                  type: string
-              - name: version
-                in: path
-                required: true
-                schema:
-                  type: string
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - Cognito_Custom_Authorizer: []
-              x-amazon-apigateway-integration:
-                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-get-dairy-diarly/invocations
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                contentHandling: CONVERT_TO_TEXT
-                type: aws_proxy
-            post:
-              parameters:
-              - name: date
-                in: path
-                required: true
-                schema:
-                  type: string
-              - name: version
-                in: path
-                required: true
-                schema:
-                  type: string
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - Cognito_Custom_Authorizer: []
-              x-amazon-apigateway-integration:
-                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-post-dairy-diarly/invocations
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                contentHandling: CONVERT_TO_TEXT
-                type: aws_proxy
-            options:
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                    Access-Control-Allow-Methods:
-                      schema:
-                        type: string
-                    Access-Control-Allow-Headers:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - NONE: []
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Methods: '''GET,OPTIONS,POST'''
-                      method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                requestTemplates:
-                  application/json: '{"statusCode": 200}'
-                passthroughBehavior: when_no_match
-                type: mock
-          /{version}/goal:
-            get:
-              parameters:
-              - name: date
-                in: path
-                required: true
-                schema:
-                  type: string
-              - name: version
-                in: path
-                required: true
-                schema:
-                  type: string
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - Cognito_Custom_Authorizer: []
-              x-amazon-apigateway-integration:
-                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-get-goal/invocations
-                responses:
-                  default:
-                    statusCode: '200'
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Origin: '''*'''
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                contentHandling: CONVERT_TO_TEXT
-                type: aws_proxy
-            post:
-              parameters:
-              - name: date
-                in: path
-                required: true
-                schema:
-                  type: string
-              - name: version
-                in: path
-                required: true
-                schema:
-                  type: string
-              responses:
-                '200':
-                  description: 200 response
-                  headers:
-                    Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                  content:
-                    application/json:
-                      schema:
-                        $ref: '#/components/schemas/Empty'
-              security:
-              - Cognito_Custom_Authorizer: []
-              x-amazon-apigateway-integration:
-                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-post-goal/invocations
+                uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:197052146621:function:gates-dev-get-news/invocations
                 responses:
                   default:
                     statusCode: '200'
@@ -431,44 +111,66 @@ Resources:
         LoggingLevel: ERROR
         ResourcePath: /*
         HttpMethod: '*'
-  gates-devApiKey:
+    Metadata:
+      SamResourceId: gatesApi
+  gatesApiKey:
     Type: AWS::ApiGateway::ApiKey
-    DependsOn: gates-devApiapiStage
+    DependsOn: gatesApiapiStage
     Properties:
       Name: gates-dev-api-key
       Enabled: true
       StageKeys:
       - RestApiId:
-          Ref: gates-devApi
+          Ref: gatesApi
         StageName: api
-  gates-devApiUsagePlan:
+    Metadata:
+      SamResourceId: gatesApiKey
+  gatesApiUsagePlan:
     Type: AWS::ApiGateway::UsagePlan
-    DependsOn: gates-devApiapiStage
+    DependsOn: gatesApiapiStage
     Properties:
       ApiStages:
       - ApiId:
-          Ref: gates-devApi
+          Ref: gatesApi
         Stage:
-          Ref: gates-devApiapiStage
+          Ref: gatesApiapiStage
       Throttle:
         BurstLimit: 200
         RateLimit: 100
       UsagePlanName: gates-dev-usage-plan
-  gates-devApiUsagePlanKey:
+    Metadata:
+      SamResourceId: gatesApiUsagePlan
+  gatesApiUsagePlanKey:
     Type: AWS::ApiGateway::UsagePlanKey
     DependsOn:
-    - gates-devApiKey
-    - gates-devApiUsagePlan
+    - gatesApiKey
+    - gatesApiUsagePlan
     Properties:
       KeyId:
-        Ref: gates-devApiKey
+        Ref: gatesApiKey
       KeyType: API_KEY
       UsagePlanId:
-        Ref: gates-devApiUsagePlan
+        Ref: gatesApiUsagePlan
+    Metadata:
+      SamResourceId: gatesApiUsagePlanKey
+  GetNewsPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::Sub: ${ProjectName}-${Stage}-get-news
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub:
+        - arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${apiId}/*/GET/*
+        - apiId:
+            Ref: gatesApi
+    Metadata:
+      SamResourceId: GetNewsPermission
 Outputs:
-  gates-devAPIId:
+  gatesApiId:
     Description: API Gateway endpoint ID
     Value:
-      Ref: gates-devApi
+      Ref: gatesApi
     Export:
-      Name: gates-devAPIId
+      Name: gatesApiId
