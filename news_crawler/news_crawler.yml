@@ -10,7 +10,6 @@ Parameters:
     Default: dev
   ApiKey:
     Type: String
-    Default: dev
 
 Resources:
   gatesArticleCrawler:
