@@ -1,6 +1,6 @@
 import time
 
-import news_crawler.lambda_function as lambda_function
+import functions.news_crawler.lambda_function as lambda_function
 
 if __name__ == '__main__':
     start = time.time()

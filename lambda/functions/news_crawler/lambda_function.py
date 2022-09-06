@@ -1,7 +1,7 @@
 
 import json
 
-from news_crawler.crawler import Crawler
+from .crawler import Crawler
 
 
 def lambda_main():

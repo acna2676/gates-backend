@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
-from news_crawler.db_access import DBAccessor
+from .db_access import DBAccessor
 
 # from dateutil.relativedelta import relativedelta
 

@@ -16,8 +16,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${ProjectName}-${Environment}-news_crawler
-      CodeUri: functions/news_crawler/
-      Handler: lambda_function.lambda_handler
+      CodeUri: functions/
+      Handler: news_crawler.lambda_function.lambda_handler
       Runtime: python3.9
       Timeout: 30
       Policies:
@@ -39,8 +39,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${ProjectName}-${Environment}-get-news
-      CodeUri: functions/retrieve_news/
-      Handler: lambda_function.lambda_handler
+      CodeUri: functions/
+      Handler: retrieve_news.lambda_function.lambda_handler
       Runtime: python3.9
       Timeout: 30
       Policies:
