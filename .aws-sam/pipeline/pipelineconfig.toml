@@ -1,0 +1,14 @@
+version = 0.1
+[default]
+[default.pipeline_bootstrap]
+[default.pipeline_bootstrap.parameters]
+pipeline_user = "arn:aws:iam::197052146621:user/aws-sam-cli-managed-gates-dev-pipelin-PipelineUser-1BOISCPESNNXE"
+
+[gates-dev]
+[gates-dev.pipeline_bootstrap]
+[gates-dev.pipeline_bootstrap.parameters]
+pipeline_execution_role = "arn:aws:iam::197052146621:role/aws-sam-cli-managed-gates-de-PipelineExecutionRole-1NA3EVQMUDGM7"
+cloudformation_execution_role = "arn:aws:iam::197052146621:role/aws-sam-cli-managed-gates-CloudFormationExecutionR-1BZCR1FIWAJ3E"
+artifacts_bucket = "gates-dev-sam-package"
+image_repository = ""
+region = "ap-northeast-1"
