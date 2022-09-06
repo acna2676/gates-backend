@@ -49,9 +49,3 @@ Resources:
       Environment:
         Variables:
           DB_TABLE_NAME: !Sub ${ProjectName}-${Environment}
-      Events:
-        Schedule:
-          Type: Schedule 
-          Properties:
-            Name: !Sub ${ProjectName}-${Environment}-news_crawler-trigger
-            Schedule: cron(0 18 * * ? *)
