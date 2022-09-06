@@ -65,7 +65,7 @@ Parameters:
     Default: "ap-northeast-1"
   ProdStackName:
     Type: String
-    Default: "1"
+    Default: "gates-dev"
   ProdPipelineExecutionRole:
     Type: String
     Default: "arn:aws:iam::197052146621:role/aws-sam-cli-managed-gates-de-PipelineExecutionRole-1NA3EVQMUDGM7"
