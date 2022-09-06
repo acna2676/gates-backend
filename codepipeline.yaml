@@ -38,7 +38,7 @@ Parameters:
     Default: "main"
   SamTemplate:
     Type: String
-    Default: "news_crawler/news_crawler.yml"
+    Default: "lambda/template.yml"
   TestingRegion:
     Type: String
     Default: "ap-northeast-1"
