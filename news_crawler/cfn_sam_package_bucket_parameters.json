@@ -1,0 +1,4 @@
+[
+  { "ParameterKey": "ProjectName", "ParameterValue": "gates" },
+  { "ParameterKey": "Environment", "ParameterValue": "dev" }
+]
