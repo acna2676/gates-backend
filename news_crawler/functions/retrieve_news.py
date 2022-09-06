@@ -44,7 +44,8 @@ class DBAccessor:
         return items
 
 
-def lambda_handler(_, __):
+def lambda_handler(event, __):
+    print("event = ", event)
     status_code = 200
     message = 'Success'
 

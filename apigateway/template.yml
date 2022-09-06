@@ -6,11 +6,11 @@ Parameters:
   ProjectId:
     Type: String
     Description: CodeStar projectId used to associate new resources to team members
-    Default: gates-dev
+    Default: gates
   Stage:
     Type: String
     Description: The name for a project pipeline stage, such as Staging or Prod, for which resources are provisioned and deployed.
-    Default: ''
+    Default: dev
 
 Globals:
   Function:
@@ -160,6 +160,14 @@ Resources:
       KeyId: !Ref gatesApiKey
       KeyType: API_KEY
       UsagePlanId: !Ref gatesApiUsagePlan
+
+  GetNewsPermission:
+    Type: AWS::Lambda::Permission
+    Properties: 
+      Action: lambda:InvokeFunction
+      FunctionName: !Sub ${ProjectName}-${Stage}-get-news
+      Principal: apigateway.amazonaws.com
+      SourceArn: arn:aws:execute-api:ap-northeast-1:197052146621:9hzrreew09/*/GET/*
 
 Outputs:
   gatesApiId:
