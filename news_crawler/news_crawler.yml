@@ -35,3 +35,23 @@ Resources:
           Properties:
             Name: !Sub ${ProjectName}-${Environment}-news_crawler-trigger
             Schedule: cron(0 18 * * ? *)
+  gatesGetNews:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${ProjectName}-${Environment}-get-news
+      CodeUri: functions/
+      Handler: retrieve_news.lambda_handler
+      Runtime: python3.9
+      Timeout: 30
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Sub ${ProjectName}-${Environment}
+      Environment:
+        Variables:
+          DB_TABLE_NAME: !Sub ${ProjectName}-${Environment}
+      Events:
+        Schedule:
+          Type: Schedule 
+          Properties:
+            Name: !Sub ${ProjectName}-${Environment}-news_crawler-trigger
+            Schedule: cron(0 18 * * ? *)

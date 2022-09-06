@@ -9,7 +9,7 @@ Parameters:
     Default: dev
 
 Resources: 
-  helmanTable: 
+  gates-devTable: 
     Type: AWS::DynamoDB::Table
     Properties: 
       AttributeDefinitions:

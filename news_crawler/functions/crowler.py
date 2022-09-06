@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
-from db_access import DBAccessor
+from .db_access import DBAccessor
 
 # from dateutil.relativedelta import relativedelta
 
@@ -30,11 +30,10 @@ class Crowler:
     # headers = {'Authorization': 'Bearer '+access_token}
 
     def __init__(self):
-        pass
         self.__db_accessor = DBAccessor()
+        self.__target_date = self.__create_target_date()
 
     def __create_items(self, item):
-        pk = str(uuid.uuid4())
         sk = str(uuid.uuid4())
         title = item.get('title')
         url = item.get('url')
@@ -42,8 +41,8 @@ class Crowler:
         publishedAt = item.get('publishedAt')
 
         items = {
-            "pk": pk,
-            "sk": 'id_' + sk,
+            "pk": self.__target_date,
+            "sk": sk,
             "title": title,
             "url": url,
             "urlToImage": urlToImage,
@@ -65,8 +64,7 @@ class Crowler:
         return 200
 
     def __get_news(self):
-        target_date = self.__create_target_date()
-        url = URL_NEWS + '/v2/everything?q=Apple&from='+target_date+'&sortBy=popularity&apiKey=60790e1b53b94781be72b717110b48c1'
+        url = URL_NEWS + '/v2/everything?q=Apple&from='+self.__target_date+'&sortBy=popularity&apiKey=60790e1b53b94781be72b717110b48c1'
 
         response = requests.get(url)  # , headers=Crowler.headers)
         # print(response.text)
@@ -76,7 +74,8 @@ class Crowler:
         dt_now = datetime.datetime.now()
         target_each_year = dt_now.strftime('%Y')  # '2022'
         target_each_month = dt_now.strftime('%m')  # '06'
-        target_date = target_each_year + '-' + target_each_month
+        target_each_day = dt_now.strftime('%d')  # '07'
+        target_date = target_each_year + '-' + target_each_month + '-' + target_each_day
         return target_date
 
     def run(self):
