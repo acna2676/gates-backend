@@ -7,8 +7,6 @@ Parameters:
   Environment:
     Type: String
     Default: dev
-  ApiKey:
-    Type: String
 
 Resources: 
   helmanTable: 
