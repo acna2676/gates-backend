@@ -1,8 +1,7 @@
 import datetime
 import json
-import os
+import time
 import uuid
-from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
@@ -39,6 +38,7 @@ class Crawler:
         url = item.get('url')
         urlToImage = item.get('urlToImage')
         publishedAt = item.get('publishedAt')
+        ttl = int(time.time()) + 86400
 
         items = {
             "pk": self.__target_date,
@@ -47,6 +47,7 @@ class Crawler:
             "url": url,
             "urlToImage": urlToImage,
             "publishedAt": publishedAt,
+            "ttl": ttl,
         }
         return items
 

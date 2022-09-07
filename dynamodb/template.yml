@@ -9,7 +9,7 @@ Parameters:
     Default: dev
 
 Resources: 
-  gates-devTable: 
+  helmanTable: 
     Type: AWS::DynamoDB::Table
     Properties: 
       AttributeDefinitions:
@@ -30,3 +30,6 @@ Resources:
       TableName: !Sub ${ProjectName}-${Environment}
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: true
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
