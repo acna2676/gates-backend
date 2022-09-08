@@ -45,7 +45,7 @@ class Crawler:
             "pk": self.__target_date,
             "sk": sk,
             "title": title,
-            "url": url,
+            "article_url": url,  # queryにおいて、ProjectionExpressionでurl属性が予約語として使用できない
             "urlToImage": urlToImage,
             "publishedAt": publishedAt,
             "ttl": ttl,

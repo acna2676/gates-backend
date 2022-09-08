@@ -33,7 +33,8 @@ class DBAccessor:
 
         try:
             response = DBAccessor.table.query(
-                KeyConditionExpression=Key('pk').eq(self.__pk)
+                KeyConditionExpression=Key('pk').eq(self.__pk),
+                ProjectionExpression='publishedAt, urlToImage, title, article_url'
             )
         except Exception as e:
             print("e = ", e)
@@ -51,6 +52,7 @@ def lambda_handler(event, __):
 
     body = {
         'message': message,
+        'articles': {},
     }
 
     # access_token = API_KEY
@@ -71,7 +73,8 @@ def lambda_handler(event, __):
 
     db_accessor = DBAccessor(pk)
     articles = db_accessor.get_items()
-    print(articles)
+    # print(articles)
+    body['articles'] = articles
 
     return {'statusCode': status_code,
             'body': json.dumps(body),
@@ -79,7 +82,7 @@ def lambda_handler(event, __):
 
 
 if __name__ == "__main__":
-    lambda_handler(None, None)
+    print(lambda_handler(None, None))
 
 # 実行方法
 # chalice local
