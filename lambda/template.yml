@@ -10,6 +10,9 @@ Parameters:
     Default: dev
   ApiKey:
     Type: String
+  DBEndpoint:
+    Type: String
+    Default: 
 
 Resources:
   gatesArticleCrawler:
@@ -48,4 +51,11 @@ Resources:
             TableName: !Sub ${ProjectName}-${Environment}
       Environment:
         Variables:
+          DB_ENDPOINT: !Sub ${DBEndpoint}
           DB_TABLE_NAME: !Sub ${ProjectName}-${Environment}
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/aws/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlesshttpapi
+          Properties:
+            Path: /{version}/news/{date}
+            Method: GET

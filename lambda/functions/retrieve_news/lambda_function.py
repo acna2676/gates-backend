@@ -41,6 +41,7 @@ class DBAccessor:
             return 500
 
         items = response['Items']  # [0]
+        print("items = ", items)
 
         return items
 
@@ -58,18 +59,20 @@ def lambda_handler(event, __):
     # access_token = API_KEY
     # headers = {'Authorization': 'Bearer '+access_token}
 
-    dt_now = datetime.datetime.now()
-    # dt_prev_year = str((dt_now - relativedelta(months=1)).year)
-    # dt_prev_month = str((dt_now - relativedelta(months=1)).month)
-    # dt_next_year = str((dt_now + relativedelta(months=1)).year)
-    # dt_next_month = str((dt_now + relativedelta(months=1)).month)
+    # dt_now = datetime.datetime.now()
+    # # dt_prev_year = str((dt_now - relativedelta(months=1)).year)
+    # # dt_prev_month = str((dt_now - relativedelta(months=1)).month)
+    # # dt_next_year = str((dt_now + relativedelta(months=1)).year)
+    # # dt_next_month = str((dt_now + relativedelta(months=1)).month)
 
-    target_year = str(dt_now.year)  # '2021'
-    target_month = str(dt_now.month).zfill(2)  # '03'
-    target_day = str(dt_now.day).zfill(2)  # '04'
-    print(target_year, target_month, target_day)
+    # target_year = str(dt_now.year)  # '2021'
+    # target_month = str(dt_now.month).zfill(2)  # '03'
+    # target_day = str(dt_now.day).zfill(2)  # '04'
+    # print(target_year, target_month, target_day)
 
-    pk = target_year + '-' + target_month + '-' + target_day
+    # pk = target_year + '-' + target_month + '-' + target_day
+    pk = event.get('pathParameters').get('date')
+    print("pk = ", pk)
 
     db_accessor = DBAccessor(pk)
     articles = db_accessor.get_items()

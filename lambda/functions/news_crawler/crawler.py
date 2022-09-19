@@ -66,7 +66,9 @@ class Crawler:
         return 200
 
     def __get_news(self):
-        url = URL_NEWS + '/v2/everything?q=Apple&from='+self.__target_date+'&sortBy=popularity&apiKey=60790e1b53b94781be72b717110b48c1'
+        # url = URL_NEWS + '/v2/everything?q=Apple&from='+self.__target_date+'&sortBy=popularity&apiKey=60790e1b53b94781be72b717110b48c1'
+
+        url = URL_NEWS + '/v2/top-headlines?country=jp&sortBy=popularity&apiKey=60790e1b53b94781be72b717110b48c1'
 
         response = requests.get(url)  # , headers=Crowler.headers)
         # print(response.text)

@@ -1,2 +1,5 @@
 .create_pipeline
 .create_pipeline_bootstrap
+
+lambda/.env
+lambda/env.json
